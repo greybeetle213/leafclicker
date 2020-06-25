@@ -17,26 +17,44 @@
                     <span id="beetleprice">100L</span><span id="beetles"> (0)</span>
                 </center>
             </div> 
+            <div style="float:left; padding:1px">
+                <center>
+                    <a onclick="addsawfly()">
+                        <img src="greysawfly.png" id="sawfly">
+                    </a>
+                    <br>
+                    <span id="sawflyprice">500L</span><span id="sawflys"> (0)</span>
+                </center>
+            </div>
         </div>
         <script>
             var clicks = 0
             var clickspeed = 1
+            //beetle variables
             var beetleprice = 100
             var beetles = 0
             var greybeetle = true
+            //sawfly variables
+            var sawflyprice = 500
+            var sawflys = 0
+            var greysawfly = true
             if (document.cookie==""){
-                document.cookie = "0,0,100,1"
+                document.cookie = "0,0,100,1,0,500"
             }
             var savedata = document.cookie.split(",")
-//          savedata 0=clicks 1=beetles 2=beetleprice 3=clickspeed
+//          savedata 0=clicks 1=beetles 2=beetleprice 3=clickspeed 4=sawflys 5=sawflyprice
             clicks = Number(savedata[0])
             beetles = Number(savedata[1])
             beetleprice = Number(savedata[2])
             clickspeed = Number(savedata[3])
+            sawflys = Number(savedata[4])
+            sawflyprice = Number(savedata[5])
             function init(){
                 document.getElementById("clicks").innerHTML = clicks
                 document.getElementById("beetles").innerHTML = " (" + beetles + ")"
-                document.getElementById("beetleprice").innerHTML = beetleprice
+                document.getElementById("beetleprice").innerHTML = beetleprice + "L"
+                document.getElementById("sawflys").innerHTML = " (" + sawflys + ")"
+                document.getElementById("sawflyprice").innerHTML = sawflyprice + "L"
                 updateimages()
             }
             setTimeout(init(), 10)
@@ -47,6 +65,10 @@
                 if(greybeetle == true && clicks >= beetleprice){
                     greybeetle = false
                     document.getElementById("beetle").src = "beetle.png"
+                }
+                if(greysawfly == true && clicks >= sawflyprice){
+                    greysawfly = false
+                    document.getElementById("sawfly").src = "sawfly.png"
                 }
                 savedata[0] = clicks
                 document.cookie = String(savedata)
@@ -67,12 +89,34 @@
                     updateimages()
                 }
             }
+            function addsawfly(){
+                if(sawflyprice <= clicks){
+                    clickspeed += 10
+                    sawflys += 1
+                    clicks -= sawflyprice
+                    sawflyprice += 500
+                    document.getElementById("clicks").innerHTML = clicks
+                    document.getElementById("sawflyprice").innerHTML = sawflyprice + "L"
+                    document.getElementById("sawflys").innerHTML = " (" + sawflys + ")"
+                    savedata[0] = clicks
+                    savedata[4] = sawflys
+                    savedata[5] = sawflyprice
+                    document.cookie = String(savedata)
+                    updateimages()
+                }
+            }
             function updateimages(){
                 if(beetleprice >= clicks){
                     document.getElementById("beetle").src = "grey beetle.png"
                     greybeetle = true
                 }else if(beetleprice <= clicks){
                     document.getElementById("beetle").src = "beetle.png"
+                }
+                if(sawflyprice >= clicks){
+                    document.getElementById("sawfly").src = "greysawfly.png"
+                    greysawfly = true
+                }else if(sawflyprice <= clicks){
+                    document.getElementById("sawfly").src = "sawfly.png"
                 }
                 savedata[3] = clickspeed
             }

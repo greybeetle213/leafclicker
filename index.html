@@ -24,6 +24,22 @@
             var beetleprice = 100
             var beetles = 0
             var greybeetle = true
+            if (document.cookie==""){
+                document.cookie = "0,0,100,1"
+            }
+            var savedata = document.cookie.split(",")
+//          savedata 0=clicks 1=beetles 2=beetleprice 3=clickspeed
+            clicks = Number(savedata[0])
+            beetles = Number(savedata[1])
+            beetleprice = Number(savedata[2])
+            clickspeed = Number(savedata[3])
+            function init(){
+                document.getElementById("clicks").innerHTML = clicks
+                document.getElementById("beetles").innerHTML = " (" + beetles + ")"
+                document.getElementById("beetleprice").innerHTML = beetleprice
+                updateimages()
+            }
+            setTimeout(init(), 10)
             function addclicks(){
                 clicks += clickspeed
                 document.getElementById("clicks").innerHTML = clicks
@@ -32,6 +48,8 @@
                     greybeetle = false
                     document.getElementById("beetle").src = "beetle.png"
                 }
+                savedata[0] = clicks
+                document.cookie = String(savedata)
             }
             function addbeetle(){
                 if(beetleprice <= clicks){
@@ -42,6 +60,10 @@
                     document.getElementById("clicks").innerHTML = clicks
                     document.getElementById("beetleprice").innerHTML = beetleprice + "L"
                     document.getElementById("beetles").innerHTML = " (" + beetles + ")"
+                    savedata[0] = clicks
+                    savedata[1] = beetles
+                    savedata[2] = beetleprice
+                    document.cookie = String(savedata)
                     updateimages()
                 }
             }
@@ -49,7 +71,10 @@
                 if(beetleprice >= clicks){
                     document.getElementById("beetle").src = "grey beetle.png"
                     greybeetle = true
+                }else if(beetleprice <= clicks){
+                    document.getElementById("beetle").src = "beetle.png"
                 }
+                savedata[3] = clickspeed
             }
             function leafdown(){
                 document.getElementById("leaf").src = "clicked leaf.png"

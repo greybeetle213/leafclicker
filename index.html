@@ -1,0 +1,62 @@
+<html>
+    <body style="background-color:blue">
+        <center>   
+        <a onclick="addclicks()" onmousedown="leafdown()">
+            <img src="leaf.png" alt="reeeeeee" id="leaf">
+        </a>
+        <br>
+        <span id="clicks" style="font-size: 30px;">0</span><span style="font-size: 30px;">L</span>
+        </center>
+        <div style="position: fixed; bottom: 0; background-color: white; width: 100%; padding: 10px;">
+            <div style="float:left; padding:1px">
+                <center>
+                    <a onclick="addbeetle()">
+                        <img src="grey beetle.png" id="beetle">
+                    </a>
+                    <br>
+                    <span id="beetleprice">100L</span><span id="beetles"> (0)</span>
+                </center>
+            </div> 
+        </div>
+        <script>
+            var clicks = 0
+            var clickspeed = 1
+            var beetleprice = 100
+            var beetles = 0
+            var greybeetle = true
+            function addclicks(){
+                clicks += clickspeed
+                document.getElementById("clicks").innerHTML = clicks
+                document.getElementById("leaf").src = "leaf.png"
+                if(greybeetle == true && clicks >= beetleprice){
+                    greybeetle = false
+                    document.getElementById("beetle").src = "beetle.png"
+                }
+            }
+            function addbeetle(){
+                if(beetleprice <= clicks){
+                    clickspeed += 1
+                    beetles += 1
+                    clicks -= beetleprice
+                    beetleprice += 50
+                    document.getElementById("clicks").innerHTML = clicks
+                    document.getElementById("beetleprice").innerHTML = beetleprice + "L"
+                    document.getElementById("beetles").innerHTML = " (" + beetles + ")"
+                    updateimages()
+                }
+            }
+            function updateimages(){
+                if(beetleprice >= clicks){
+                    document.getElementById("beetle").src = "grey beetle.png"
+                    greybeetle = true
+                }
+            }
+            function leafdown(){
+                document.getElementById("leaf").src = "clicked leaf.png"
+            }
+            function testbutton(){
+                alert("sucsuss!")
+            }
+        </script>
+    </body>
+</html>

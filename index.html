@@ -26,6 +26,15 @@
                     <span id="sawflyprice">500L</span><span id="sawflys"> (0)</span>
                 </center>
             </div>
+            <div style="float: left; padding: 1px;">
+                <center>
+                    <a onclick="testbutton()">
+                        <img src="greyleafcutter.png" alt="leafcutter bee">
+                    </a>
+                    <br>
+                    <span id="leafcutterprice">1000L</span><span id="leafcutters"> (0)</span>
+                </center>
+            </div>
         </div>
         <script>
             var clicks = 0
@@ -38,6 +47,10 @@
             var sawflyprice = 500
             var sawflys = 0
             var greysawfly = true
+            if (document.URL != "https://greybeetle213.github.io/leafclicker/"){
+                alert("this uses code cloned from greybeetle213s project leafclicker")
+                document.cookie = ""
+            }
             if (document.cookie==""){
                 document.cookie = "0,0,100,1,0,500"
             }
